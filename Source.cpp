@@ -8,6 +8,18 @@ const char* END_MARKER = "$~$";
 
 using namespace std;
 
+// -------------------------------------------------------------------------------------------
+// @name                        : ScrambleString
+//
+// @description                 : Scrambles a given input using password. It is caller's 
+//                                responsibility to free the string returned by this function.
+//
+// @param password              : Password for scrambling
+// @param input                 : Input string
+//
+// @returns                     : scrambled string on success,
+//                                nullptr otherwise
+// -------------------------------------------------------------------------------------------
 char* ScrambleString(const char* password, const char* input)
 {
     char *scrambled = nullptr;
@@ -27,9 +39,7 @@ char* ScrambleString(const char* password, const char* input)
     }
     scrambled = (char*)malloc(scrambled_len + 1);
     memset(scrambled, 0, sizeof(char)*(scrambled_len + 1));
-    sprintf_s(scrambled, scrambled_len, "%s %s", input, END_MARKER);
-    //strcpy_s(scrambled, input_len + 1, input);
-    //strcat_s(scrambled, strlen(END_MARKER) + 1, END_MARKER);
+    snprintf(scrambled, scrambled_len, "%s %s", input, END_MARKER);
     printf("String to scramble  : %s\n", scrambled);
     printf("Input len           : %d\n", input_len);
 
@@ -42,6 +52,18 @@ char* ScrambleString(const char* password, const char* input)
     return scrambled;
 }
 
+// -------------------------------------------------------------------------------------------
+// @name                        : UnscrambleString
+//
+// @description                 : Unscrambles a given string using password. It is caller's 
+//                                responsibility to free the string returned by this function.
+//
+// @param password              : Password for unscrambling
+// @param input                 : Input string
+//
+// @returns                     : unscrambled string on success,
+//                                nullptr otherwise
+// -------------------------------------------------------------------------------------------
 char* UnscrambleString(const char* password, const char* input)
 {
     char *unscrambled = nullptr;
@@ -71,15 +93,6 @@ char* UnscrambleString(const char* password, const char* input)
 
 int main()
 {
-    string a("abcde\nfgh\nijkl\nas");
-    //cout << a << endl;
-    string b = a.substr(0, 10);
-    cout << "b: " << b << endl;
-    cout << "DONE" << endl;
-    getchar();
-    return 0;
-    /*char* inp = "abcdefghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz";
-    char* pwd = "romanov";*/
     char* inp = "abcd efgh ijkl mnop qrs tuv wx yz abcd efgh ijkl mnop qrs tuv wx yz abcd efgh ijkl mnop qrs tuv wx yz";
     char* pwd = "Password@123";
     char *enc = ScrambleString(pwd, inp);
@@ -95,14 +108,13 @@ int main()
         std::cout << "Unscrambling failed\n" << endl;
     }
 
-#if 1
     std::cout <<"\n\n================================================"<< endl;
     std::cout << "Input     : " << inp << endl;
     std::cout << "Input Len : " << strlen(inp) << endl;
     std::cout << "Pwd       : " << pwd << endl;
     std::cout << "Enc       : " << enc << endl;
     std::cout << "Dec       : " << dec << endl;
-#endif
+
     getchar();
     return 0;
 }
