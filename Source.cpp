@@ -40,15 +40,12 @@ char* ScrambleString(const char* password, const char* input)
     scrambled = (char*)malloc(scrambled_len + 1);
     memset(scrambled, 0, sizeof(char)*(scrambled_len + 1));
     snprintf(scrambled, scrambled_len, "%s %s", input, END_MARKER);
-    printf("String to scramble  : %s\n", scrambled);
-    printf("Input len           : %d\n", input_len);
 
     for (int i = 0; i < scrambled_len; ++i)
     {
         scrambled[i] = scrambled[i] ^ password[i % password_len];
     }
 
-    printf("Scrambled: \n%s\n", scrambled);
     return scrambled;
 }
 
@@ -80,13 +77,10 @@ char* UnscrambleString(const char* password, const char* input)
         unscrambled[i] = input[i] ^ password[i % password_len];
     }
     
-    printf("Unscrambled: \n%s\n", unscrambled);
     char *end_marker = strstr(unscrambled, END_MARKER);
     end_marker--;
     *end_marker = '\0';
-    printf(">>> %s\n", end_marker);
     plaintext_len = strlen(unscrambled);
-    printf("unscrambled len: %d\n", plaintext_len);
     return unscrambled;
     
 }
@@ -114,6 +108,7 @@ int main()
     std::cout << "Pwd       : " << pwd << endl;
     std::cout << "Enc       : " << enc << endl;
     std::cout << "Dec       : " << dec << endl;
+    std::cout << "Dec len   : " << strlen(dec) << endl;
 
     getchar();
     return 0;
